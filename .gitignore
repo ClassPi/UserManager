@@ -6,3 +6,4 @@ Properties/
 UserManager.csproj.user
 UserManager.sln
 appsettings.Development.json
+.github/

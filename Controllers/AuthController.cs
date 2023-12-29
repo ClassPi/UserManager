@@ -69,6 +69,7 @@ namespace UserManager.Controllers
                 ipFailCount.Remove(ip);
                 //生成Token
                 var token = GenerateToken(user);
+
                 //为客户端设置cookie
                 Response.Cookies.Append("Authorization", token, new CookieOptions()
                 {
@@ -77,7 +78,8 @@ namespace UserManager.Controllers
                     SameSite = SameSiteMode.None,
                     Secure = false
                 });
-                return new JsonResult(new { success = true, token = token });
+
+                return new JsonResult(new { success = true, message = token });
             }
         }
 
@@ -109,7 +111,7 @@ namespace UserManager.Controllers
 
                 await _userDbContext.CreateUser(newUser);
 
-                return new JsonResult(new { success = true });
+                return new JsonResult(new { success = true, message = "注册成功" });
             }
 
         }
