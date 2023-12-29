@@ -1,0 +1,8 @@
+.vs/
+bin/
+obj/
+Properties/
+.vscode/
+UserManager.csproj.user
+UserManager.sln
+appsettings.Development.json
