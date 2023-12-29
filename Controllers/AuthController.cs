@@ -130,7 +130,7 @@ namespace UserManager.Controllers
                 ),
                 // 设置令牌的颁发者、受众、过期时间等
                 Issuer = _configuration.Configuration["JWT:Issuer"] ?? throw new ConfigurationNotExistsException(),
-                Audience =  string.Join(",", _configuration.Configuration.GetSection("JWT:Audience").GetChildren().Select(c => c.Value)),
+                Audience = _configuration.Configuration["JWT:Audience"] ?? throw new ConfigurationNotExistsException(),
                 Expires = DateTime.UtcNow.AddMonths(1),
                 // 设置令牌的数据和声明
                 Subject = new ClaimsIdentity(new Claim[]
@@ -138,7 +138,7 @@ namespace UserManager.Controllers
                     new Claim(ClaimTypes.Name, user.Username),
                     new Claim(ClaimTypes.Role, "user"),
                     new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.NameIdentifier, user.Id),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id)
                 })
             };
             // 使用令牌处理器和令牌描述符创建一个令牌
