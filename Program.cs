@@ -44,9 +44,7 @@ public class Program
                 policy.WithOrigins(allowOrigins!)
                               .AllowAnyMethod()
                               .AllowAnyHeader()
-                              .AllowCredentials();
-                              
-                              
+                              .AllowCredentials();                       
             });
 
 
@@ -69,7 +67,7 @@ public class Program
                     // 验证颁发者
                     ValidIssuer = builder.Configuration["JWT:Issuer"],
                     // 验证访问群体
-                    ValidAudience = builder.Configuration["JWT:Audience"],
+                    ValidAudiences = builder.Configuration["JWT:Audience"]?.Split(','),
                     // 验证密钥
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Token"]!))
                 };
@@ -117,6 +115,7 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
+        app.UseAuthentication();
 
         app.MapControllers();
 

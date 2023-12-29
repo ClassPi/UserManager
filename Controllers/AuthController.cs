@@ -70,7 +70,7 @@ namespace UserManager.Controllers
                 //生成Token
                 var token = GenerateToken(user);
 
-                //为客户端设置cookie
+                //为客户端设置cookie(如果有需要的话)
                 Response.Cookies.Append("Authorization", token, new CookieOptions()
                 {
                     HttpOnly = true,
@@ -130,7 +130,7 @@ namespace UserManager.Controllers
                 ),
                 // 设置令牌的颁发者、受众、过期时间等
                 Issuer = _configuration.Configuration["JWT:Issuer"] ?? throw new ConfigurationNotExistsException(),
-                Audience = _configuration.Configuration.GetSection("JWT:Audience").GetChildren().ConvertToString() ?? throw new ConfigurationNotExistsException(),
+                Audience =  string.Join(",", _configuration.Configuration.GetSection("JWT:Audience").GetChildren().Select(c => c.Value)),
                 Expires = DateTime.UtcNow.AddMonths(1),
                 // 设置令牌的数据和声明
                 Subject = new ClaimsIdentity(new Claim[]
@@ -143,6 +143,7 @@ namespace UserManager.Controllers
             };
             // 使用令牌处理器和令牌描述符创建一个令牌
             var token = handler.CreateToken(descriptor);
+
             // 使用令牌处理器将令牌转换为字符串
             var tokenString = handler.WriteToken(token);
             tokenString = "Bearer" + tokenString;
