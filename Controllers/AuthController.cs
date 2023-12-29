@@ -2,15 +2,13 @@
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using UserManager.Database;
-using UserManager.Models;
-using System.Net.Http.Json;
 using BCrypt.Net;
 using UserManager.Services;
 using UserManager.Tools;
 using System.Security.Claims;
+using UserManager.Model;
 
 
 namespace UserManager.Controllers
